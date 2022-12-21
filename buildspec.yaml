@@ -18,7 +18,7 @@ phases:
       - echo **** Testing the template****
       - cfn-lint 1-ec2-user-template.yaml
       - echo **** Building CloudFormation started on 'date' ****
-      - aws cloudformation package --template-file 1-ec2-user-template.yaml --s3-bucket mo6-dev-artifact-bucket --output-template-file packaged-template.yaml
+      - aws cloudformation package --template-file 1-ec2-user-template.yaml --s3-bucket mo6-dev-artifact-bucket --output-template-file outputTemplate.yaml
     finally:
       - echo Getting good at this
   post_build:
@@ -28,5 +28,5 @@ phases:
 artifacts:
   files:
     - 1-ec2-user-template.yaml
-    - packaged-template.yaml
+    - outputTemplate.yaml
   
