@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8 # intall python on Amazon Linux server
+  pre_build:
+    commands:
+      - echo Entered the pre_build phase...
+      - echo The version of python install is
+      - python3 --version
+      - echo Installing cfn-lint
+      - pip3 install cfn-lint
+      - echo Checking cfn-lint version...
+      - cfn-lint --version
+  build:
+    commands:
+      - echo **** Testing the template****
+      - cfn-lint 1-ec2-user-template.yaml
+      - echo **** Building CloudFormation started on 'date' ****
+      - aws cloudformation package --template-file 1-ec2-user-template.yaml --s3-bucket mo6-dev-artifact-bucket --output-template-file packaged-template.yaml
+    finally:
+      - echo Getting good at this
+  post_build:
+    commands:
+      - echo Packaging artifact...
+
+artifacts:
+  files:
+    - 1-ec2-user-template.yaml
+    - packaged-template.yaml
+  
